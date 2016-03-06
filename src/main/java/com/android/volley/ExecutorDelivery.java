@@ -96,7 +96,10 @@ public class ExecutorDelivery implements ResponseDelivery {
 
             // Deliver a normal response or error, depending.
             if (mResponse.isSuccess()) {
-                mRequest.deliverResponse(mResponse.result);
+                if(mRequest instanceof ExtendedRequest)
+                    ((ExtendedRequest) mRequest).deliverResponse(mResponse);
+                else
+                    mRequest.deliverResponse(mResponse.result);
             } else {
                 mRequest.deliverError(mResponse.error);
             }
